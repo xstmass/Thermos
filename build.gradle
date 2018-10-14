@@ -7,7 +7,7 @@ buildscript {
     repositories {
         maven {
             name 'prok'
-            url 'https://djoveryde.000webhostapp.com/kcauldron/files/'
+            url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
         }
         maven {
             name 'forge'
@@ -54,7 +54,7 @@ repositories {
     }
     maven {
         name 'prok'
-        url 'https://djoveryde.000webhostapp.com/kcauldron/files/'
+        url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
     }
     maven {
         name 'forge'
@@ -93,7 +93,7 @@ ext.buildInfoCached = null;
 def buildInfo(String key) {
     if (!buildInfoCached) {
         if (project.hasProperty('officialBuild')) {
-            buildInfoCached = new JsonSlurper().parse(new URL("https://th.tcpr.ca/version"))
+            buildInfoCached = new JsonSlurper().parse(new URL("https://dev.cyberarmy.co.uk/thermos/version/?version=1.7.10"))
         } else {
             buildInfoCached = [
                     nextBuildNumber: 'UNOFFICIAL',
@@ -310,7 +310,7 @@ publishing {
     repositories {
         maven {
             name 'ProK'
-            url 'https://djoveryde.000webhostapp.com/kcauldron/files/'
+            url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
             credentials {
                 username project.hasProperty('prokRepoUsername') ? prokRepoUsername : null
                 password project.hasProperty('prokRepoPassword') ? prokRepoPassword : null
@@ -345,7 +345,7 @@ repositories {
     clear()
     maven {
         name 'prok'
-        url 'https://djoveryde.000webhostapp.com/kcauldron/files/'
+        url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
     }
     maven {
         name 'forge'
