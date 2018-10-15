@@ -24,7 +24,7 @@ Advantages over KCauldron:
 
 
 ## Installation
-Click [here](http://imaginarium.github.io/Thermos/install)
+Click [here](https://mcimaginarium.github.io//Thermos/install)
 
 ## Downloads
 You can download the pre-built packages from [here](https://github.com/Terminal-Access/Thermos/releases). 
@@ -43,7 +43,7 @@ N\A
 
 ## Contributing
 
-Please read the [guide](http://imaginarium.github.io/Thermos/contributing) on how to contribute - Thermos always needs improvements :smile: 
+Please read the [guide](https://mcimaginarium.github.io//Thermos/contributing) on how to contribute - Thermos always needs improvements :smile: 
 
 ## Build Requirements
 * Java 8u101 JDK or higher
