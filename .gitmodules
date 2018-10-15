@@ -4,4 +4,5 @@
 	branch = 1.7.10
 [submodule "bukkit"]
 	path = bukkit
-	url = https://github.com/Terminal-Access/Thermos-Bukkit
+	url = https://github.com/MCImaginarium/bukkit.git
+	branch = 1.7.10
