@@ -5,7 +5,7 @@
 ![Thermos](thermos_icon.png)
 <!--- ![Graph](http://i.mcstats.org/Thermos/Global+Statistics@2x.borderless.png) --->
 
-[![Build Status](https://travis-ci.org/Terminal-Access/Thermos.svg?branch=1.7.10)](https://travis-ci.org/Terminal-Access/Thermos)
+[![Build Status](https://travis-ci.org/mcimaginarium/Thermos.svg?branch=1.7.10)](https://travis-ci.org/mcimaginarium/Thermos)
 ![Minecraft Forge v10.13.4.1614][forge]
 ![Minecraft v1.7.10][mc]
 ![Java JDK v1.8][java]
@@ -27,7 +27,7 @@ Advantages over KCauldron:
 Click [here](https://mcimaginarium.github.io//Thermos/install)
 
 ## Downloads
-You can download the pre-built packages from [here](https://github.com/Terminal-Access/Thermos/releases). 
+You can download the pre-built packages from [here](https://github.com/mcimaginarium/Thermos/releases). 
 
 **Thermos is still in beta and you may encounter issues in using it with your server. You have been warned!**
 
@@ -52,7 +52,7 @@ Please read the [guide](https://mcimaginarium.github.io//Thermos/contributing) o
 ## Building Terminal-Access/Thermos
 * Checkout project
   * You can use IDE or clone from console:
-  `git clone https://github.com/Terminal-Access/Thermos.git`
+  `git clone https://github.com/mcimaginarium/Thermos.git`
 * Setup
   * Auto: `setup.sh`
   * Manual:
