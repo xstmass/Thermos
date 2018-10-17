@@ -5,4 +5,4 @@
 [submodule "bukkit"]
 	path = bukkit
 	url = https://github.com/MCImaginarium/bukkit.git
-	branch = 1.7.10
+	branch = 1.7.10-test
