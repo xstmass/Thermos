@@ -338,7 +338,7 @@ publishing {
 
 tasks.generateProjectCauldron << {
     def file = new File('eclipse/cauldron/build.gradle')
-    file.append(
+    file.append('''
 repositories {
     clear()
     maven {
@@ -357,6 +357,7 @@ repositories {
     mavenLocal()
 }
 dependencies {
+''')
     configurations.libraries.resolvedConfiguration.resolvedArtifacts.collect { it.moduleVersion.id }.each { module ->
         if (['net.minecraft:server:', 'org.ow2.asm:asm-all'].findAll { (module as String).startsWith it }.size() > 0) {
             return
