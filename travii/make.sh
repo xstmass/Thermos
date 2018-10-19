@@ -6,7 +6,7 @@ cd forge
 git checkout aa8eaf2b286e809146b7faf4e59ce801a40eab9b
 cd ..
 git pull origin 1.7.10
-./gradlew --parallel -PofficialBuild clean setupCauldron --parallel jar
+./gradlew --parallel -PofficialBuild clean setupCauldron --parallel jar packageBundle
 cp build/distributions/Thermos*server* $HOME/release/Thermos-1.7.10-1558-server.jar
 
 # 1614

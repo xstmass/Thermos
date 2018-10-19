@@ -133,7 +133,7 @@ configurations {
 }
 
 dependencies {
-    bootstrap 'pw.prok:KBootstrap:0.2.+'
+    bootstrap 'pw.prok:KBootstrap:0.3.+'
     libraries 'pw.prok:KBootstrap:0.3.2@jar'
     libraries 'pw.prok:Damask:0.1.2@jar'
     libraries 'commons-cli:commons-cli:1.3@jar'
@@ -229,8 +229,8 @@ task jar(type: Jar, dependsOn: packageUniversal) {
     manifest.attributes(generateManifest())
 }
 
-tasks.createChangelog.onlyIf { true }
-tasks.packageInstaller.onlyIf { true }
+tasks.createChangelog.onlyIf { false }
+tasks.packageInstaller.onlyIf { false }
 
 task packageChangelog(type: CreateChangelog) {
     onlyIf { project.hasProperty('officialBuild') }

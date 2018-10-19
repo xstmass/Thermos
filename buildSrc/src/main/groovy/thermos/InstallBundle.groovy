@@ -37,7 +37,7 @@ class InstallBundle extends DefaultTask {
 
             it << '''Thermos installation guide
 
-# This is Thermos from https://github.com/TCPR/Thermos
+# This is Thermos from https://github.com/MCImaginarium/Thermos
 
 # Installation and usage
 1. Unpack this zip into server directory
@@ -52,7 +52,7 @@ class InstallBundle extends DefaultTask {
 
 3. Enjoy
 
-Public builds can be found at: https://tcpr.ca/downloads/thermos
+Public builds can be found at: https://yivesmirror.com/downloads/thermos
 
 '''
         }
