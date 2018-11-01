@@ -5,9 +5,11 @@ import thermos.VersionParser
 
 buildscript {
     repositories {
+        mavenLocal()
+        mavenCentral()
         maven {
             name 'prok'
-            url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
+            url 'https://cauldron.mcimaginarium.co.uk/files/'
         }
         maven {
             name 'forge'
@@ -21,10 +23,9 @@ buildscript {
             name 'spigot'
             url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
         }
-        mavenCentral()
     }
     dependencies {
-        //classpath files('FGS.jar')
+        classpath files('FGS.jar')
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
@@ -44,17 +45,19 @@ apply plugin: 'signing'
 
 repositories {
     clear()
+    mavenLocal()
+    mavenCentral()
     maven {
         name 'sonatype'
         url 'http://oss.sonatype.org/content/repositories/snapshots/'
     }
     maven {
         name 'prok'
-        url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
+        url 'http://cauldron.mcimaginarium.co.uk/files/'
     }
     maven {
         name 'forge'
-        url 'http://files.minecraftforge.net/maven/'
+        url 'https://files.minecraftforge.net/maven/'
     }
     maven {
         name 'minecraft'
@@ -64,12 +67,11 @@ repositories {
         name 'spigot'
         url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
-    mavenCentral()
 }
 
 minecraft {
     version = '1.7.10'
-    mcpVersion = '9.08'
+    mcpVersion = '9.05'
     mainClass = 'cpw.mods.fml.relauncher.ServerLaunchWrapper'
     tweakClass = 'cpw.mods.fml.common.launcher.FMLTweaker'
     installerVersion = "1.4"
@@ -83,10 +85,10 @@ ext.buildInfoCached = null;
 def buildInfo(String key) {
     if (!buildInfoCached) {
         if (project.hasProperty('officialBuild')) {
-            buildInfoCached = new JsonSlurper().parse(new URL("https://dev.cyberarmy.co.uk/thermos/version/?version=1.7.10"))
+            buildInfoCached = new JsonSlurper().parse(new URL("https://thermos.mcimaginarium.co.uk/version/?version=1.7.10"))
         } else {
             buildInfoCached = [
-                    nextBuildNumber: 'UNOFFICIAL',
+                    nextBuildNumber: '1',
                     version        : 'NONE'
             ]
         }
@@ -188,6 +190,8 @@ def generateClasspath(boolean legacy = false) {
     return classpath.trim()
 }
 
+
+
 def generateManifest(boolean legacy = false) {
     [
             'Thermos-Git-Branch'    : gitInfo('branch'),
@@ -228,7 +232,7 @@ task packageChangelog(type: CreateChangelog) {
     onlyIf { project.hasProperty('officialBuild') }
     classifier = 'changelog'
     extension = 'txt'
-    oldChangelogUrl = "https://dev.cyberarmy.co.uk/thermos/changelog.txt"
+    oldChangelogUrl = "https://thermos.mcimaginarium.co.uk/changelog.txt"
     hash = gitInfo('hash')
     message = gitInfo('message')
     version = project.version
@@ -291,7 +295,7 @@ publishing {
     repositories {
         maven {
             name 'ProK'
-            url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
+            url 'https://cauldron.mcimaginarium.co.uk/files/'
             credentials {
                 username project.hasProperty('prokRepoUsername') ? prokRepoUsername : null
                 password project.hasProperty('prokRepoPassword') ? prokRepoPassword : null
@@ -326,7 +330,7 @@ repositories {
     clear()
     maven {
         name 'prok'
-        url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
+        url 'https://cauldron.mcimaginarium.co.uk/files/'
     }
     maven {
         name 'forge'
