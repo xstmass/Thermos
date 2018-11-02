@@ -5,8 +5,6 @@ import thermos.VersionParser
 
 buildscript {
     repositories {
-        mavenLocal()
-        mavenCentral()
         maven {
             name 'prok'
             url 'https://cauldron.mcimaginarium.co.uk/files/'
@@ -23,9 +21,9 @@ buildscript {
             name 'spigot'
             url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
         }
+		mavenCentral()
     }
     dependencies {
-        classpath files('FGS.jar')
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
@@ -45,8 +43,6 @@ apply plugin: 'signing'
 
 repositories {
     clear()
-    mavenLocal()
-    mavenCentral()
     maven {
         name 'sonatype'
         url 'http://oss.sonatype.org/content/repositories/snapshots/'
@@ -67,6 +63,7 @@ repositories {
         name 'spigot'
         url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
+	mavenCentral()
 }
 
 minecraft {
@@ -86,11 +83,12 @@ def buildInfo(String key) {
     if (!buildInfoCached) {
         if (project.hasProperty('officialBuild')) {
             buildInfoCached = new JsonSlurper().parse(new URL("https://thermos.mcimaginarium.co.uk/version/?version=1.7.10"))
-        } else {
-            buildInfoCached = [
-                    nextBuildNumber: '1',
-                    version        : 'NONE'
-            ]
+        } 
+		else {
+			buildInfoCached = [
+					nextBuildNumber: 'UNOFFICIAL',
+					version        : 'NONE'
+			]
         }
     }
     return key ? buildInfoCached[key] : buildInfoCached;
@@ -341,7 +339,6 @@ repositories {
         url 'https://libraries.minecraft.net/'
     }
     mavenCentral()
-    mavenLocal()
 }
 dependencies {
 ''')
