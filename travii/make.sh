@@ -1,5 +1,5 @@
-mkdir $HOME/release
-rm -r $HOME/release/*
+#mkdir $HOME/release
+#rm -r $HOME/release/*
 
 # 1558
 #cd forge
@@ -18,11 +18,11 @@ cd ..
 #git pull origin 1.7.10
 #./gradlew --parallel -PofficialBuild clean setupCauldron --parallel jar packageBundle
 ./gradlew --parallel clean setupCauldron --parallel jar packageBundle
-cp build/distributions/Thermos*server* $HOME/release/Thermos-1.7.10-1614-server.jar
+#cp build/distributions/Thermos*server* $HOME/release/Thermos-1.7.10-1614-server.jar
 
-cd build/distributions/
-unzip Thermos*bundle*zip
-rm -r bin/unknown
-mv bin libraries
-zip -r libraries.zip libraries
-cp libraries.zip $HOME/release
+#cd build/distributions/
+#unzip Thermos*bundle*zip
+#rm -r bin/unknown
+#mv bin libraries
+#zip -r libraries.zip libraries
+#cp libraries.zip $HOME/release
