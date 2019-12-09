@@ -5,9 +5,12 @@ import thermos.VersionParser
 
 buildscript {
     repositories {
+        flatDir {
+			dirs 'libs'
+		}
         maven {
             name 'prok'
-            url 'https://cauldron.mcimaginarium.co.uk/files/'
+            url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
         }
         maven {
             name 'forge'
@@ -20,9 +23,6 @@ buildscript {
         maven {
             name 'spigot'
             url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-        }
-        flatDir {
-            dirs 'libs'
         }
         mavenCentral()
         mavenLocal()
@@ -48,13 +48,16 @@ apply plugin: 'signing'
 
 repositories {
     clear()
+    flatDir {
+        dirs 'libs'
+    }
     maven {
         name 'sonatype'
         url 'http://oss.sonatype.org/content/repositories/snapshots/'
     }
     maven {
         name 'prok'
-        url 'http://cauldron.mcimaginarium.co.uk/files/'
+        url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
     }
     maven {
         name 'forge'
@@ -85,7 +88,7 @@ minecraft {
     srgExtra "PK: org/bukkit/craftbukkit org/bukkit/craftbukkit/v1_7_R4"
 }
 
-group = 'MCImaginarium'
+group = 'cyberdynecc'
 
 ext.buildInfoCached = null;
 
@@ -179,7 +182,9 @@ dependencies {
     libraries 'mysql:mysql-connector-java:5.1.14'
     libraries 'javax.persistence:persistence-api:1.0.2'
     libraries 'net.minecraft:server:1.7.10'
+        //compile name: 'server-1.7.10'
     libraries 'pw.prok:KImagine:0.2.0@jar'
+    	//compile name: 'KImagine-0.2.0'
     libraries 'org.apache.httpcomponents:httpclient:4.4.1'
     libraries 'net.openhft:affinity:3.0.1'
     libraries 'org.fusesource.jansi:jansi:1.11'
@@ -312,7 +317,7 @@ publishing {
     repositories {
         maven {
             name 'ProK'
-            url 'https://cauldron.mcimaginarium.co.uk/files/'
+            url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
             credentials {
                 username project.hasProperty('prokRepoUsername') ? prokRepoUsername : null
                 password project.hasProperty('prokRepoPassword') ? prokRepoPassword : null
@@ -345,9 +350,12 @@ tasks.generateProjectCauldron << {
     file.append('''
 repositories {
     clear()
+    flatDir {
+        dirs 'libs'
+    }
     maven {
         name 'prok'
-        url 'https://cauldron.mcimaginarium.co.uk/files/'
+        url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
     }
     maven {
         name 'forge'
