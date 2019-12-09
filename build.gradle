@@ -1,34 +1,21 @@
 import groovy.json.JsonSlurper
 import thermos.CreateChangelog
-import thermos.InstallBundle
 import thermos.VersionParser
 
 buildscript {
     repositories {
-        flatDir {
-			dirs 'libs'
-		}
-        maven {
-            name 'prok'
-            url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
-        }
         maven {
             name 'forge'
             url 'http://files.minecraftforge.net/maven/'
         }
-        maven {
-            name 'sonatype'
-            url 'http://oss.sonatype.org/content/repositories/snapshots/'
-        }
-        maven {
-            name 'spigot'
-            url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-        }
+        flatDir {
+			dirs 'libraries'
+		}
         mavenCentral()
         mavenLocal()
     }
     dependencies {
-        classpath files('FGS.jar')
+//        classpath files('FGS.jar')
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
@@ -48,47 +35,27 @@ apply plugin: 'signing'
 
 repositories {
     clear()
-    flatDir {
-        dirs 'libs'
-    }
-    maven {
-        name 'sonatype'
-        url 'http://oss.sonatype.org/content/repositories/snapshots/'
-    }
-    maven {
-        name 'prok'
-        url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
-    }
     maven {
         name 'forge'
         url 'https://files.minecraftforge.net/maven/'
     }
-    maven {
-        name 'minecraft'
-        url 'https://libraries.minecraft.net/'
-    }
-    maven {
-        name 'spigot'
-        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-    }
     flatDir {
-        dirs 'libs'
+        dirs 'libraries'
     }
- 
     mavenCentral()
     mavenLocal()
 }
 
 minecraft {
     version = '1.7.10'
-    mcpVersion = '9.05'
+    mcpVersion = '9.08'
     mainClass = 'cpw.mods.fml.relauncher.ServerLaunchWrapper'
     tweakClass = 'cpw.mods.fml.common.launcher.FMLTweaker'
     installerVersion = "1.4"
     srgExtra "PK: org/bukkit/craftbukkit org/bukkit/craftbukkit/v1_7_R4"
 }
 
-group = 'cyberdynecc'
+group = 'MooseCraft'
 
 ext.buildInfoCached = null;
 
@@ -190,7 +157,6 @@ dependencies {
     libraries 'org.fusesource.jansi:jansi:1.11'
 	libraries 'com.koloboke:koloboke-impl-jdk8:1.0.0'
 	libraries 'java3d:vecmath:1.3.1'
-	libraries fileTree(dir: "libs", include: "*.jar")
 }
 
 packageUniversal {
@@ -203,26 +169,25 @@ def String repeat(String string, int times) {
     builder as String
 }
 
-def generateClasspath(boolean legacy = false) {
+def generateClasspath() {
     def classpath = ''
     configurations.libraries.resolvedConfiguration.resolvedArtifacts.collect { it.moduleVersion.id }.each {
         def jar = "${it.group.replace('.', '/')}/${it.name}/${it.version}/${it.name}-${it.version}.jar"
-        classpath += " ${legacy ? 'libraries/' : repeat('../', (group as String).split('\\.').length + 2)}${jar}"
+        classpath += " ${'libraries/'}${jar}"
     }
     return classpath.trim()
 }
 
 
 
-def generateManifest(boolean legacy = false) {
+def generateManifest() {
     [
             'Thermos-Git-Branch'    : gitInfo('branch'),
             'Thermos-Git-Hash'      : gitInfo('fullHash'),
             'Thermos-Group'         : project.group,
             'Thermos-Channel'       : project.name,
             'Thermos-Version'       : project.version,
-            'Thermos-Legacy'        : legacy,
-            'Implementation-Vendor' : 'MCImaginarium',
+            'Implementation-Vendor' : 'jefgen',
             'Implementation-Title'  : project.name,
             'Implementation-Version': project.version,
             'Specification-Vendor'  : 'Bukkit Team',
@@ -231,14 +196,14 @@ def generateManifest(boolean legacy = false) {
             'Forge-Version'         : VersionParser.parseForgeVersion(file('forge/src/main/java/net/minecraftforge/common/ForgeVersion.java'), file('src/main/resources/fmlversion.properties')),
             'TweakClass'            : 'cpw.mods.fml.common.launcher.FMLTweaker',
             'Main-Class'            : 'cpw.mods.fml.relauncher.ServerLaunchWrapper',
-            'Class-Path'            : generateClasspath(legacy)
+            'Class-Path'            : generateClasspath()
     ]
 }
 
 tasks.packageUniversal {
     classifier = 'server'
     setManifest {}
-    manifest.attributes(generateManifest(true))
+    manifest.attributes(generateManifest())
 }
 
 task jar(type: Jar, dependsOn: packageUniversal) {
@@ -268,15 +233,9 @@ task bundleStub(type: Jar) {
     ])
 }
 
-task installBundle(type: InstallBundle, dependsOn: jar) {
-    serverJar tasks.jar.archivePath
-    bootstrapClasspath configurations.bootstrap
-    bootstrapMain 'pw.prok.bootstrap.Main'
-}
-
-task packageBundle(type: Zip, dependsOn: installBundle) {
+task packageBundle(type: Zip) {
     classifier = 'bundle'
-    from fileTree(installBundle.installLocation)
+    from fileTree("libraries")
     from bundleStub
     rename bundleStub.archiveName, 'Thermos.jar'
 }
@@ -314,35 +273,6 @@ def getSignatureFiles = {
 }
 
 publishing {
-    repositories {
-        maven {
-            name 'ProK'
-            url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
-            credentials {
-                username project.hasProperty('prokRepoUsername') ? prokRepoUsername : null
-                password project.hasProperty('prokRepoPassword') ? prokRepoPassword : null
-            }
-        }
-    }
-
-    publications {
-        maven(MavenPublication) {
-            getSignatureFiles().each { signature ->
-                artifact(signature.archive) {
-                    classifier = signature.classifier
-                    extension = signature.extension
-                }
-            }
-            artifact(getPomSignature()) {
-                classifier = null
-                extension = 'pom.asc'
-            }
-            artifact packageUniversal
-            artifact packageChangelog
-            artifact packageBundle
-            artifact jar
-        }
-    }
 }
 
 tasks.generateProjectCauldron << {
@@ -350,20 +280,12 @@ tasks.generateProjectCauldron << {
     file.append('''
 repositories {
     clear()
-    flatDir {
-        dirs 'libs'
-    }
-    maven {
-        name 'prok'
-        url 'https://dev.cyberarmy.co.uk/kcauldron/files/'
-    }
     maven {
         name 'forge'
         url 'http://files.minecraftforge.net/maven/'
     }
-    maven {
-        name 'minecraft'
-        url 'https://libraries.minecraft.net/'
+    flatDir {
+        dirs '../../libraries'
     }
     mavenCentral()
     mavenLocal()
