@@ -2,6 +2,8 @@
 
 # eclipse
 /eclipse
+.project
+.settings/
 
 # idea
 .idea
@@ -12,3 +14,12 @@ build
 .gradle
 
 *.DS_Store
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+# Ignore all local history of files
+.history
