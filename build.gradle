@@ -61,15 +61,10 @@ ext.buildInfoCached = null;
 
 def buildInfo(String key) {
     if (!buildInfoCached) {
-        if (project.hasProperty('officialBuild')) {
-            buildInfoCached = new JsonSlurper().parse(new URL("https://thermos.mcimaginarium.co.uk/version/?version=1.7.10"))
-        } 
-		else {
-			buildInfoCached = [
-					nextBuildNumber: 'UNOFFICIAL',
-					version        : 'NONE'
-			]
-        }
+        buildInfoCached = [
+                nextBuildNumber: 'UNOFFICIAL',
+                version        : 'NONE'
+        ]
     }
     return key ? buildInfoCached[key] : buildInfoCached;
 }
