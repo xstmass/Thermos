@@ -29,7 +29,7 @@ public class ThermosCommand extends Command {
     public static final String TPS = NAME + ".tps";
     public static final String RESTART = NAME + ".restart";
     public static final String DUMP = NAME + ".dump";
-    public static final String UPDATE = NAME + ".update";
+
     public ThermosCommand() {
         super(NAME);
 
