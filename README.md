@@ -1,11 +1,14 @@
-# This project is dedicated to renewing the ability for Minecraft servers to use native bukkit plugins along with Forge mods.
+# Note
+This fork is my attempt to get Thermos up and running (again) for a local FeedTheBeast server. It may, or may not, work at all.
 
-# Thermos 1.7.10 Branch
+---
+
+# Thermos 1.7.10
 
 ![Thermos](thermos_icon.png)
 <!--- ![Graph](http://i.mcstats.org/Thermos/Global+Statistics@2x.borderless.png) --->
 
-[![Build Status](https://travis-ci.org/mcimaginarium/Thermos.svg?branch=1.7.10)](https://travis-ci.org/mcimaginarium/Thermos)
+[![Build Status](https://api.travis-ci.com/jefgen/Thermos.svg?branch=1.7.10)](https://api.travis-ci.com/jefgen/Thermos)
 ![Minecraft Forge v10.13.4.1614][forge]
 ![Minecraft v1.7.10][mc]
 ![Java JDK v1.8][java]
@@ -22,28 +25,14 @@ Advantages over KCauldron:
 + Many patches that KCauldron didn't get from Spigot
 + Dupe glitch fixes
 
-
-## Installation
-Click [here](https://mcimaginarium.github.io//Thermos/install)
-
 ## Downloads
-You can download the pre-built packages from [here](https://github.com/mcimaginarium/Thermos/releases). 
-
 **Thermos is still in beta and you may encounter issues in using it with your server. You have been warned!**
 
 P.S. **PLEASE** look at the release notes before downloading! :smile:
 
-## Chat
-
-Feel free to drop in on the Imaginarium Discord chat [here](https://discord.gg/ZxPJnDZ)
-
 ## Donate/Support
 
 N\A
-
-## Contributing
-
-Please read the [guide](https://mcimaginarium.github.io//Thermos/contributing) on how to contribute - Thermos always needs improvements :smile: 
 
 ## Build Requirements
 * Java 8u101 JDK or higher
