@@ -146,6 +146,7 @@ public final class CraftServer implements Server {
     private final String serverName = "Cauldron"; // Cauldron - temporarily keep MCPC-Plus name until plugins adapt
     private final String serverVersion;
     private final String bukkitVersion = Versioning.getBukkitVersion();
+    private final String urlGitHub = "https://github.com/jefgen/Thermos";
     private final Logger logger = Logger.getLogger("Minecraft");
     private final ServicesManager servicesManager = new SimpleServicesManager();
     private final CraftScheduler scheduler = new CraftScheduler();
@@ -466,6 +467,11 @@ public final class CraftServer implements Server {
         return bukkitVersion;
     }
 
+    @Override
+    public String getGitHubUrl() {
+        return urlGitHub;
+    }
+    
     @Override
     @Deprecated
     @SuppressWarnings("unchecked")

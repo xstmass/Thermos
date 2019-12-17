@@ -346,6 +346,7 @@
      {
 -        return this.field_150815_m && this.isTerrainPopulated && this.isLightPopulated;
 +        return true; // Spigot https://github.com/CyberdyneCC/Thermos/commit/e1ada4deb899529eaf28e3de66666f880a65d60f
++        // https://github.com/PaperMC/Paper-1.7/blob/master/CraftBukkit-Patches/0056-Fix-some-chunks-not-being-sent-to-the-client.patch
 +        //return this.field_150815_m && this.isTerrainPopulated && this.isLightPopulated;
      }
  
