@@ -8,7 +8,6 @@ This fork is my attempt to get Thermos up and running (again) for a local FeedTh
 ![Thermos](thermos_icon.png)
 <!--- ![Graph](http://i.mcstats.org/Thermos/Global+Statistics@2x.borderless.png) --->
 
-[![Build Status](https://api.travis-ci.com/jefgen/Thermos.svg?branch=1.7.10)](https://api.travis-ci.com/jefgen/Thermos)
 ![Minecraft Forge v10.13.4.1614][forge]
 ![Minecraft v1.7.10][mc]
 ![Java JDK v1.8][java]
@@ -41,7 +40,7 @@ N\A
 ## Building Terminal-Access/Thermos
 * Checkout project
   * You can use IDE or clone from console:
-  `git clone https://github.com/mcimaginarium/Thermos.git`
+  `git clone https://github.com/xstmas/Thermos.git`
 * Setup
   * Auto: `setup.sh`
   * Manual:
