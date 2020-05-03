@@ -1,5 +1,5 @@
 # Note
-This fork is my attempt to get Thermos up and running (again) for a local FeedTheBeast server. It may, or may not, work at all.
+This fork is my attempt to get Thermos up and running (again) for me and all of you.
 
 ---
 
