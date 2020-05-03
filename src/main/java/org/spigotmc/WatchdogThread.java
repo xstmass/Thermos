@@ -71,7 +71,7 @@ public class WatchdogThread extends Thread
             {
                 Logger log = Bukkit.getServer().getLogger();
                 log.log(Level.SEVERE, "The server has stopped responding!");
-                log.log(Level.SEVERE, "Please report this to " + Bukkit.getServer().getGitHubUrl());
+                log.log(Level.SEVERE, "Please report this to ***REMOVED***");
                 log.log(Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports");
                 log.log(Level.SEVERE, "Cauldron version: " + Bukkit.getServer().getVersion());
                 

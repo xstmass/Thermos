@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import com.google.common.base.Charsets;
+import com.google.common.cache.CacheBuilder;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
@@ -143,10 +144,9 @@ import jline.console.ConsoleReader;
 public final class CraftServer implements Server {
     private static final Player[] EMPTY_PLAYER_ARRAY = new Player[0];
     public static Spigot spigot;
-    private final String serverName = "Cauldron"; // Cauldron - temporarily keep MCPC-Plus name until plugins adapt
+    private final String serverName = "Cauldron";
     private final String serverVersion;
     private final String bukkitVersion = Versioning.getBukkitVersion();
-    private final String urlGitHub = "https://github.com/jefgen/Thermos";
     private final Logger logger = Logger.getLogger("Minecraft");
     private final ServicesManager servicesManager = new SimpleServicesManager();
     private final CraftScheduler scheduler = new CraftScheduler();
@@ -161,7 +161,7 @@ public final class CraftServer implements Server {
     public YamlConfiguration configuration = MinecraftServer.configuration; // Cauldron
     private YamlConfiguration commandsConfiguration = MinecraftServer.commandsConfiguration; // Cauldron
     private final Yaml yaml = new Yaml(new SafeConstructor());
-    private final Map<UUID, OfflinePlayer> offlinePlayers = new MapMaker().weakValues().makeMap();
+    private final Map<UUID, OfflinePlayer> offlinePlayers = CacheBuilder.newBuilder().softValues().<UUID, OfflinePlayer>build().asMap();
     private final AutoUpdater updater;
     private final EntityMetadataStore entityMetadata = new EntityMetadataStore();
     private final PlayerMetadataStore playerMetadata = new PlayerMetadataStore();
@@ -467,11 +467,6 @@ public final class CraftServer implements Server {
         return bukkitVersion;
     }
 
-    @Override
-    public String getGitHubUrl() {
-        return urlGitHub;
-    }
-    
     @Override
     @Deprecated
     @SuppressWarnings("unchecked")
@@ -1697,14 +1692,14 @@ public final class CraftServer implements Server {
         String token = event.getLastToken();
         for (Player p : getOnlinePlayers()) {
             if (player.canSee(p) && StringUtil.startsWithIgnoreCase(p.getName(), token)) {
-            	if (event.isPinging())
-            	{
-            		StringBuilder sb = new StringBuilder(1 + p.getName().length());
-            		sb.append('@'); sb.append(p.getName());
-            		completions.add(sb.toString());
-            	}
-            	else
-            		completions.add(p.getName());
+                if (event.isPinging())
+                {
+                    StringBuilder sb = new StringBuilder(1 + p.getName().length());
+                    sb.append('@'); sb.append(p.getName());
+                    completions.add(sb.toString());
+                }
+                else
+                    completions.add(p.getName());
             }
         }
         pluginManager.callEvent(event);
