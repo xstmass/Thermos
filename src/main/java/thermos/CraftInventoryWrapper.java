@@ -142,4 +142,3 @@ public class CraftInventoryWrapper extends CraftInventory {
         }
     }
 }
-

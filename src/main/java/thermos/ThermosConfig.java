@@ -7,6 +7,13 @@ import net.minecraftforge.cauldron.configuration.BoolSetting;
 import net.minecraftforge.cauldron.configuration.ConfigBase;
 import net.minecraftforge.cauldron.configuration.Setting;
 import net.minecraftforge.cauldron.configuration.StringSetting;
+import net.minecraftforge.cauldron.configuration.IntSetting;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import net.minecraft.block.Block;
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 public class ThermosConfig extends ConfigBase {
     public BoolSetting commandEnable = new BoolSetting(this, "command.enable", true, "Enable Thermos command");
@@ -18,6 +25,10 @@ public class ThermosConfig extends ConfigBase {
     public BoolSetting loggingClientModList = new BoolSetting(this, "logging.clientModList", true, "Print client's mod list during attempt to join");
         
     public BoolSetting commonAllowNetherPortal = new BoolSetting(this, "common.allowNetherPortalBesidesOverworld", false, "Allow nether portals in dimensions besides overworld");
+
+    public BoolSetting enable_oversizedchunk = new BoolSetting(this, "command.enable_oversizedchunk", true, "Enable Oversized Chunk to be saved");
+
+    public IntSetting chunk_cache_size = new IntSetting(this,"command.chunk_cache_size", 256, "Size of cached chunk");
     
     public ThermosConfig() {
         super("thermos.yml", "thermos");
@@ -28,8 +39,13 @@ public class ThermosConfig extends ConfigBase {
         register(loggingClientModList);
         register(commonAllowNetherPortal);
         register(opConsoleOnly);
+        register(enable_oversizedchunk);
+        register(chunk_cache_size);
         load();
     }
+
+
+    
 
     private void register(Setting<?> setting) {
         settings.put(setting.path, setting);
