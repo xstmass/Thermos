@@ -35,7 +35,7 @@
          }
  
 -        return RegionFileCache.createOrLoadRegionFile(this.chunkSaveLocation, i, j).chunkExists(i & 31, j & 31);
-+        final RegionFile region = RegionFileCache.createOrLoadRegionFile(this.chunkSaveLocation, i, j, false);
++        final RegionFile region = RegionFileCache.createOrLoadRegionFile(this.chunkSaveLocation, i, j);
 +        return region != null && region.chunkExists(i & 31, j & 31);
      }
  

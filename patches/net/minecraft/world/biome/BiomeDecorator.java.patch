@@ -1,21 +1,50 @@
 --- ../src-base/minecraft/net/minecraft/world/biome/BiomeDecorator.java
 +++ ../src-work/minecraft/net/minecraft/world/biome/BiomeDecorator.java
-@@ -24,6 +24,14 @@
- import net.minecraftforge.common.*;
- import net.minecraftforge.event.terraingen.*;
+@@ -1,29 +1,27 @@
+ package net.minecraft.world.biome;
  
-+// Spigot Start
+-import java.util.Random;
+ import net.minecraft.block.BlockFlower;
+ import net.minecraft.block.material.Material;
+ import net.minecraft.init.Blocks;
+ import net.minecraft.world.World;
+-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+-import net.minecraft.world.gen.feature.WorldGenBigMushroom;
+-import net.minecraft.world.gen.feature.WorldGenCactus;
+-import net.minecraft.world.gen.feature.WorldGenClay;
+-import net.minecraft.world.gen.feature.WorldGenDeadBush;
+-import net.minecraft.world.gen.feature.WorldGenFlowers;
+-import net.minecraft.world.gen.feature.WorldGenLiquids;
+-import net.minecraft.world.gen.feature.WorldGenMinable;
+-import net.minecraft.world.gen.feature.WorldGenPumpkin;
+-import net.minecraft.world.gen.feature.WorldGenReed;
+-import net.minecraft.world.gen.feature.WorldGenSand;
+-import net.minecraft.world.gen.feature.WorldGenWaterlily;
+-import net.minecraft.world.gen.feature.WorldGenerator;
++import net.minecraft.world.chunk.Chunk;
++import net.minecraft.world.gen.feature.*;
++import net.minecraftforge.common.MinecraftForge;
++import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
++import net.minecraftforge.event.terraingen.OreGenEvent;
++import net.minecraftforge.event.terraingen.TerrainGen;
+ 
 +import java.util.ArrayList;
 +import java.util.Iterator;
 +import java.util.List;
++import java.util.Random;
 +
-+import net.minecraft.world.chunk.Chunk;
+ import static net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.*;
+ import static net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.*;
+-import net.minecraftforge.common.*;
+-import net.minecraftforge.event.terraingen.*;
+ 
++// Spigot Start
 +// Spigot End
 +
  public class BiomeDecorator
  {
      public World currentWorld;
-@@ -61,6 +69,8 @@
+@@ -61,6 +59,8 @@
      public int clayPerChunk;
      public int bigMushroomsPerChunk;
      public boolean generateLakes;
@@ -24,7 +53,7 @@
      private static final String __OBFID = "CL_00000164";
  
      public BiomeDecorator()
-@@ -92,12 +102,29 @@
+@@ -92,12 +92,29 @@
  
      public void decorateChunk(World p_150512_1_, Random p_150512_2_, BiomeGenBase p_150512_3_, int p_150512_4_, int p_150512_5_)
      {
@@ -35,7 +64,7 @@
 -        else
 -        {
 +      int ct = 0;
-+      while(decorateLock.isLocked())
++      while(decorateLock.isLocked() && !decorateLock.isHeldByCurrentThread())
 +      {
 +          try { Thread.sleep(100L); } catch(Exception e) {} finally { ct++; }
 +          if(ct > 100 ) {
@@ -60,7 +89,7 @@
              this.currentWorld = p_150512_1_;
              this.randomGenerator = p_150512_2_;
              this.chunk_X = p_150512_4_;
-@@ -105,7 +132,7 @@
+@@ -105,7 +122,7 @@
              this.genDecorations(p_150512_3_);
              this.currentWorld = null;
              this.randomGenerator = null;
@@ -69,7 +98,7 @@
      }
  
      protected void genDecorations(BiomeGenBase p_150513_1_)
-@@ -194,7 +221,7 @@
+@@ -194,7 +211,7 @@
          {
              k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
              l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -78,7 +107,7 @@
              WorldGenerator worldgenerator = p_150513_1_.getRandomWorldGenForGrass(this.randomGenerator);
              worldgenerator.generate(this.currentWorld, this.randomGenerator, k, i1, l);
          }
-@@ -204,7 +231,7 @@
+@@ -204,7 +221,7 @@
          {
              k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
              l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -87,7 +116,7 @@
              (new WorldGenDeadBush(Blocks.deadbush)).generate(this.currentWorld, this.randomGenerator, k, i1, l);
          }
  
-@@ -214,7 +241,7 @@
+@@ -214,7 +231,7 @@
              k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
              l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
  
@@ -96,7 +125,7 @@
              {
                  ;
              }
-@@ -229,7 +256,7 @@
+@@ -229,7 +246,7 @@
              {
                  k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
                  l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -105,7 +134,7 @@
                  this.mushroomBrownGen.generate(this.currentWorld, this.randomGenerator, k, i1, l);
              }
  
-@@ -237,7 +264,7 @@
+@@ -237,7 +254,7 @@
              {
                  k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
                  l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -114,7 +143,7 @@
                  this.mushroomRedGen.generate(this.currentWorld, this.randomGenerator, k, i1, l);
              }
          }
-@@ -246,7 +273,7 @@
+@@ -246,7 +263,7 @@
          {
              j = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
              k = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -123,7 +152,7 @@
              this.mushroomBrownGen.generate(this.currentWorld, this.randomGenerator, j, l, k);
          }
  
-@@ -254,7 +281,7 @@
+@@ -254,7 +271,7 @@
          {
              j = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
              k = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -132,7 +161,7 @@
              this.mushroomRedGen.generate(this.currentWorld, this.randomGenerator, j, l, k);
          }
  
-@@ -263,7 +290,7 @@
+@@ -263,7 +280,7 @@
          {
              k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
              l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -141,7 +170,7 @@
              this.reedGen.generate(this.currentWorld, this.randomGenerator, k, i1, l);
          }
  
-@@ -271,7 +298,7 @@
+@@ -271,7 +288,7 @@
          {
              k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
              l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -150,7 +179,7 @@
              this.reedGen.generate(this.currentWorld, this.randomGenerator, k, i1, l);
          }
  
-@@ -280,7 +307,7 @@
+@@ -280,7 +297,7 @@
          {
              j = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
              k = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -159,7 +188,7 @@
              (new WorldGenPumpkin()).generate(this.currentWorld, this.randomGenerator, j, l, k);
          }
  
-@@ -289,7 +316,7 @@
+@@ -289,7 +306,7 @@
          {
              k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
              l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
@@ -168,7 +197,7 @@
              this.cactusGen.generate(this.currentWorld, this.randomGenerator, k, i1, l);
          }
  
-@@ -313,6 +340,7 @@
+@@ -313,6 +330,7 @@
              }
          }
  
@@ -176,7 +205,7 @@
          MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(currentWorld, randomGenerator, chunk_X, chunk_Z));
      }
  
-@@ -360,6 +388,33 @@
+@@ -360,6 +378,33 @@
          MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Post(currentWorld, randomGenerator, chunk_X, chunk_Z));
      }
  
